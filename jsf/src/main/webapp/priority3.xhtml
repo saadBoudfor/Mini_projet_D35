@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+<h:body>
+    <ui:composition template="layout/dashBoard.xhtml">
+        <ui:define name="content">
+
+            <div class="wrapper">
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h3 class="page-header"><i class="fa fa-laptop"></i> Taches Urgente et importante</h3>
+                        <ol class="breadcrumb">
+                        </ol>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-lg-8">
+                        <!--Project Activity start-->
+                        <div class="panel">
+                            <div class="panel-body progress-panel">
+                                <div class="row">
+                                    <div class="col-lg-8 task-progress pull-left" style="height: 30px">
+                                        <h1>Priorité forte: </h1>
+                                    </div>
+                                    <div class="col-lg-4">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h:dataTable styleClass="table table-hover personal-task" value="#{userController.getTaskByPriority(3)}" var="tk">
+                                <h:column>
+                                    <h:outputLabel value="#{tk.dateCreation}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                    </h:outputLabel>
+                                </h:column>
+
+                                <h:column>
+                                    #{tk.titre}
+                                </h:column>
+
+                                <h:column>
+                                    <span class="#{userController.getStyleClasseForStatu(tk.id)}">#{tk.status}</span>
+                                </h:column>
+                            </h:dataTable>
+
+
+                        </div>
+                        <!--Project Activity end-->
+                    </div>
+                </div><br/><br/>
+
+
+            </div>
+
+        </ui:define>
+    </ui:composition>
+
+</h:body>
+</html>

@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+<h:body>
+    <ui:composition template="layout/dashBoard.xhtml">
+        <ui:define name="content">
+
+                <div class="wrapper">
+                    <!--overview start-->
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h3 class="page-header"><i class="fa fa-laptop"></i> Page Principale</h3>
+                            <ol class="breadcrumb">
+
+                            </ol>
+                        </div>
+                    </div>
+
+                    <!--Affichage des taches: -->
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <!--Project Activity start-->
+                            <div class="panel">
+                                <div class="panel-body progress-panel">
+                                    <div class="row">
+                                        <div class="col-lg-8 task-progress pull-left" style="height: 30px;">
+                                            <h1>Liste des Taches: </h1>
+                                        </div>
+                                        <div class="col-lg-4">
+                                <span class="profile-ava pull-right">
+                                        <img alt="" class="simple" src="#{resource['img/avatar1_small.jpg']}"/>
+                                        #{userController.utilisateur.nom}  #{userController.utilisateur.prenom}
+                                </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                    <h:dataTable styleClass="table table-hover personal-task" value="#{userController.tasksNotExpiredByUser}"  var="tk">
+                                        <h:column>
+                                            <h:outputLabel value="#{tk.dateCreation}">
+                                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                            </h:outputLabel>
+                                        </h:column>
+
+                                        <h:column>
+                                            #{tk.titre}
+                                        </h:column>
+
+                                        <h:column>
+                                            <span class="#{userController.getStyleClasseForPriority(tk.id)}"> <h:outputLabel value="#{tk.priority}" class="prio"/> </span>
+
+                                        </h:column>
+
+                                        <h:column>
+                                            <span class="#{userController.getStyleClasseForStatu(tk.id)}">#{tk.status}</span>
+                                        </h:column>
+
+                                        <h:column>
+                                            <h:form>
+                                            <h:commandLink styleClass="btn btn-default" value="+info" action="#{taskController.getTaskInfo(tk.id)}" >
+                                                <span class="icon_lightbulb_alt"></span>
+                                                <f:setPropertyActionListener  value="#{tk}" target="#{taskController.selectedTask}"/>
+                                            </h:commandLink>
+                                            </h:form>
+
+                                        </h:column>
+
+
+                                    </h:dataTable>
+
+
+                            </div>
+                            <!--Project Activity end-->
+                        </div>
+
+
+                        <!--Plus d'info:-->
+
+
+
+
+
+
+                        <div class="col-md-4 portlets">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <div class="pull-left">Information sur une tache: </div>
+                                    <div class="widget-icons pull-right">
+
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="padd">
+
+                                        <div class="form quick-post">
+                                            <!-- Edit profile form (not working)-->
+                                            <h:form  styleClass="form-horizontal">
+
+
+                                                <!--*******************-->
+
+                                                <!-- Title -->
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-2" for="title3">Titre</label>
+                                                    <div class="col-lg-10">
+                                                        <h:outputText  class="form-control" id="title3" value="#{userController.selectedTask.titre}"/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-2" for="projet">Projet</label>
+                                                    <div class="col-lg-10">
+                                                        <h:outputText class="form-control" id="projet" value="#{userController.selectedTask.parent.titre}"/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-2" for="Contenue">Contenue</label>
+                                                    <div class="col-lg-10">
+                                                        <h:outputText  class="form-control" id="Contenue" value="#{userController.selectedTask.contenue}"/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-2" for="ettiquette">Etiquette</label>
+                                                    <div class="col-lg-10">
+                                                        <h:outputText class="form-control" id="ettiquette" value="Aucunne Etiquette"/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-2" for="title4">Assigner Tache:</label>
+                                                    <div class="col-lg-10">
+                                                        <h:inputText type="text" class="form-control" id="title4" value=" " a:placeholder="Adresse mail"/>
+                                                    </div>
+                                                </div>
+
+                                                <!--********************-->
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-2" for="title2">Ajouter une éttiquette</label>
+                                                    <div class="col-lg-10">
+                                                        <h:inputText type="text" class="form-control" id="title2" value=" "/>
+                                                    </div>
+                                                </div>
+                                                <!-- Buttons -->
+                                                <div class="form-group">
+                                                    <!-- Buttons -->
+                                                    <div class="col-lg-offset-2 col-lg-9">
+
+                                                        <h:commandButton type="submit" class="btn btn-primary" value="Modifier" action="main"/>
+                                                        <h:commandButton type="submit" class="btn btn-danger" value="Supprimer" action="main"/>
+                                                        <h:commandButton type="submit" class="btn btn-default" value="Enregistrer" action="main"/>
+
+                                                    </div>
+                                                </div>
+
+                                            </h:form>
+
+                                        </div>
+
+
+                                    </div>
+                                    <div class="widget-foot">
+                                        <!-- Footer goes here -->
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-md-4 portlets">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <div class="pull-left">Information sur un projet: </div>
+                                    <div class="widget-icons pull-right">
+
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="padd">
+
+                                        <div class="form quick-post">
+                                            <!-- Edit profile form (not working)-->
+                                            <h:form  styleClass="form-horizontal">
+
+
+                                                <!--*******************-->
+
+                                                <!-- Title -->
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-2" for="title5">Titre</label>
+                                                    <div class="col-lg-10">
+                                                        <h:outputText  class="form-control" id="title5" value="#{userController.selectedTask.titre}"/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-2" for="projet1">Participant</label>
+                                                    <div class="col-lg-10">
+                                                        <h:outputText class="form-control" id="projet1" value="#{userController.selectedTask.parent.titre}"/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-2" for="Contenue1">Liste des taches effectuées:</label>
+                                                    <div class="col-lg-10">
+                                                        <h:outputText  class="form-control" id="Contenue1" value=""/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-2" for="ettiquette1">Liste des taches non effectuées:</label>
+                                                    <div class="col-lg-10">
+                                                        <h:outputText class="form-control" id="ettiquette1" value=""/>
+                                                    </div>
+                                                </div>
+
+
+                                                <!-- Buttons -->
+                                                <div class="form-group">
+                                                    <!-- Buttons -->
+                                                    <div class="col-lg-offset-2 col-lg-9">
+
+                                                        <h:commandButton type="submit" class="btn btn-primary" value="Modifier" action="main"/>
+                                                        <h:commandButton type="submit" class="btn btn-danger" value="Supprimer" action="main"/>
+                                                    </div>
+                                                </div>
+
+                                            </h:form>
+
+                                        </div>
+
+
+                                    </div>
+                                    <div class="widget-foot">
+                                        <!-- Footer goes here -->
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+
+                    </div><br/><br/>
+
+                    <div class="row">
+                        <!--Créer Projet:-->
+                        <div class="col-lg-12 portlets">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <div class="pull-left">Nouveau Projet: </div>
+                                    <div class="widget-icons pull-right">
+
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="padd">
+
+                                        <div class="form quick-post">
+                                            <!-- Edit profile form (not working)-->
+                                            <h:form  styleClass="form-horizontal">
+                                                <!-- Title -->
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-2" for="title1">Titre</label>
+                                                    <div class="col-lg-10">
+                                                        <h:inputText type="text" class="form-control" id="title1" value="#{userController.project.titre}"/>
+                                                    </div>
+                                                </div>
+                                                <!-- Buttons -->
+                                                <div class="form-group">
+                                                    <!-- Buttons -->
+                                                    <div class="col-lg-offset-2 col-lg-9">
+                                                        <h:commandButton type="submit" styleClass="btn btn-primary" action="#{userController.createProject}" id="save1" value="Enregistrer"/>
+                                                    </div>
+                                                </div>
+
+
+                                            </h:form>
+
+                                        </div>
+
+
+                                    </div>
+                                    <div class="widget-foot">
+                                        <!-- Footer goes here -->
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!--Création des taches: -->
+                    <div class="row">
+                        <div class="col-md-6 portlets ">
+                            <div class="panel-heading">
+                                <div class="pull-left"> </div>
+                                <div class="widget-icons pull-right">
+
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+
+
+
+                            <div class="panel-body">
+
+                                        <h:form>
+                            <p:growl id="messages" showDetail="true" />
+
+                            <h:panelGrid columnClasses="value">
+                                <p:schedule id="schedule" value="#{scheduleView.eventModel}" widgetVar="myschedule" timeZone="GMT+2">
+
+                                    <p:ajax event="dateSelect" listener="#{scheduleView.onDateSelect}"   update="eventDetails" oncomplete="PF('eventDialog').show();" />
+                                    <p:ajax event="eventSelect" listener="#{scheduleView.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
+                                    <p:ajax event="eventMove" listener="#{scheduleView.onEventMove}"     update="messages" />
+                                    <p:ajax event="eventResize" listener="#{scheduleView.onEventResize}" update="messages" />
+
+                                </p:schedule>
+
+                            </h:panelGrid>
+
+                            <p:dialog widgetVar="eventDialog" header="Event Details" showEffect="clip" hideEffect="clip">
+
+                                <h:panelGrid id="eventDetails" columns="2">
+                                    <p:outputLabel for="title" value="Titles:" />
+                                    <p:inputText id="title" value="#{scheduleView.event.title}" required="true" />
+
+                                    <p:outputLabel for="from" value="From:" />
+                                    <p:calendar id="from" value="#{scheduleView.event.startDate}" timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm"/>
+
+                                    <p:outputLabel for="to" value="To:" />
+                                    <p:calendar id="to" value="#{scheduleView.event.endDate}" timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm"/>
+
+                                    <p:outputLabel for="allDay" value="All Day:" />
+                                    <h:selectBooleanCheckbox id="allDay" value="#{scheduleView.event.allDay}" />
+
+                                    <p:commandButton type="reset" value="Reset" />
+                                    <p:commandButton id="addButton" value="Save" actionListener="#{scheduleView.addEvent}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
+                                </h:panelGrid>
+
+                            </p:dialog>
+
+                        </h:form>
+
+                                </div>
+
+
+                        </div>
+
+                        <div>
+                        <h:outputScript>
+                            PrimeFaces.locales['tr'] = {
+                            closeText: 'kapat',
+                            prevText: 'geri',
+                            nextText: 'ileri',
+                            currentText: 'bugün',
+                            monthNames: ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran',
+                            'Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'],
+                            monthNamesShort: ['Oca','Şub','Mar','Nis','May','Haz',
+                            'Tem','Ağu','Eyl','Eki','Kas','Ara'],
+                            dayNames: ['Pazar','Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi'],
+                            dayNamesShort: ['Pz','Pt','Sa','Ça','Pe','Cu','Ct'],
+                            dayNamesMin: ['Pz','Pt','Sa','Ça','Pe','Cu','Ct'],
+                            weekHeader: 'Hf',
+                            firstDay: 1,
+                            isRTL: false,
+                            showMonthAfterYear: false,
+                            yearSuffix: '',
+                            month: 'Ay',
+                            week: 'Hafta',
+                            day: 'Gün',
+                            allDayText : 'Tüm Gün'
+                            };
+                        </h:outputScript>
+
+                        <h:outputStylesheet>
+                            .calendrier{
+                                background: whitesmoke;
+                            }
+                            .value {
+                                width: 1000px;
+                                height: 200px;
+                                padding-left: 30px;
+                            }
+                        </h:outputStylesheet>
+
+                        </div>
+
+                        <div class="col-md-6 portlets">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <div class="pull-left">Nouvelle Tache: </div>
+                                    <div class="widget-icons pull-right">
+
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="padd">
+
+                                        <div class="form quick-post">
+                                            <!-- Edit profile form (not working)-->
+                                            <h:form  styleClass="form-horizontal">
+                                                <!-- Title -->
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-2" for="title">Titre</label>
+                                                    <div class="col-lg-10">
+                                                        <h:inputText type="text" class="form-control" id="title" value="#{userController.task.titre}"/>
+                                                    </div>
+                                                </div>
+                                                <!-- Content -->
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-2" for="content">Contenue</label>
+                                                    <div class="col-lg-10">
+                                                        <h:inputTextarea class="form-control" id="content" value="#{userController.task.contenue}"></h:inputTextarea>
+                                                    </div>
+                                                </div>
+
+
+
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-2" for="date">Délais d'échéance</label>
+                                                    <div class="col-lg-10">
+                                                        <h:inputText type="text" class="form-control datepicker" id="date" value="#{userController.task.delaisEcheance}">
+                                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                                        </h:inputText>
+                                                    </div>
+                                                </div>
+
+
+                                                <!--Priorite-->
+
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-2">Projet</label>
+                                                    <div class="col-lg-10">
+                                                        <h:selectOneMenu styleClass="form-control" value="#{userController.selectedProject}" >
+                                                            <f:selectItems value="#{userController.utilisateur.mesProjets}" />
+                                                        </h:selectOneMenu>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                <label class="control-label col-lg-2">Statu</label>
+                                                    <div class="col-lg-10">
+                                                        <h:selectOneMenu styleClass="form-control" value="#{userController.task.status}" >
+                                                            <f:selectItems value="#{userController.statuses}" />
+                                                        </h:selectOneMenu>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="control-label col-lg-2">Priorité</label>
+                                                    <div class="col-lg-10">
+                                                        <h:selectOneMenu styleClass="form-control" value="#{userController.task.priority}" >
+                                                            <f:selectItems value="#{userController.priorities}" />
+                                                        </h:selectOneMenu>
+                                                    </div>
+                                                </div>
+
+
+                                                <!-- Buttons -->
+                                                <div class="form-group">
+                                                    <!-- Buttons -->
+                                                    <div class="col-lg-offset-2 col-lg-9">
+                                                        <h:commandButton type="submit" styleClass="btn btn-primary" action="#{userController.createTask}" id="save" value="Enregistrer"/>
+                                                        <h:commandButton type="submit" styleClass="btn btn-default" id="reset" value="Reset"/>
+                                                    </div>
+                                                </div>
+
+
+                                            </h:form>
+
+                                        </div>
+
+
+                                    </div>
+                                    <div class="widget-foot">
+                                        <!-- Footer goes here -->
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+
+
+                </div>
+            <!-- project team & activity end -->
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

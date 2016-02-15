@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+
+</h:head>
+
+<h:body>
+    <div class="col-md-4 portlets">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="pull-left">Information: </div>
+                <div class="widget-icons pull-right">
+
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="panel-body">
+                <div class="padd">
+
+                    <div class="form quick-post">
+                        <!-- Edit profile form (not working)-->
+                        <h:form  styleClass="form-horizontal">
+
+
+                            <!--*******************-->
+
+                            <!-- Title -->
+                            <div class="form-group">
+                                <label class="control-label col-lg-2" for="title3">Titre</label>
+                                <div class="col-lg-10">
+                                    <h:outputText  class="form-control" id="title3" value="#{userController.task.titre}"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-2" for="projet">Projet</label>
+                                <div class="col-lg-10">
+                                    <h:outputText class="form-control" id="projet" value="#{userController.task.parent.titre}"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-2" for="Contenue">Contenue</label>
+                                <div class="col-lg-10">
+                                    <h:outputText  class="form-control" id="Contenue" value="#{userController.task.contenue}"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-lg-2" for="ettiquette">Etiquette</label>
+                                <div class="col-lg-10">
+                                    <h:outputText class="form-control" id="ettiquette" value="Aucunne Ettiquette"/>
+                                </div>
+                            </div>
+
+
+                            <!--********************-->
+                            <div class="form-group">
+                                <label class="control-label col-lg-2" for="title2">Ajouter une éttiquette</label>
+                                <div class="col-lg-10">
+                                    <h:inputText type="text" class="form-control" id="title2" value=" "/>
+                                </div>
+                            </div>
+                            <!-- Buttons -->
+                            <div class="form-group">
+                                <!-- Buttons -->
+                                <div class="col-lg-offset-2 col-lg-9">
+
+                                    <h:commandButton type="submit" class="btn btn-primary" value="Modifier" action="main"/>
+                                    <h:commandButton type="submit" class="btn btn-danger" value="Supprimer" action="main"/>
+                                    <h:commandButton type="submit" class="btn btn-default" value="Enregitrer" action="main"/>
+
+                                </div>
+                            </div>
+
+                        </h:form>
+
+                    </div>
+
+
+                </div>
+                <div class="widget-foot">
+                    <!-- Footer goes here -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</h:body>
+</html>

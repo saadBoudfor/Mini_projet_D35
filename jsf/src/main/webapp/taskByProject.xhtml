@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+<h:body>
+    <ui:composition template="layout/dashBoard.xhtml">
+        <ui:define name="content">
+
+            <div class="wrapper">
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h3 class="page-header"><i class="fa fa-laptop"></i> Filtre: Taches par priorité</h3>
+                        <ol class="breadcrumb">
+                        </ol>
+                    </div>
+                </div>
+                </div>
+
+            <div class="row">
+
+                <div class="col-lg-9 col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h2><i class="fa fa-flag-o red"></i><strong>Liste de tous les projets</strong></h2>
+                            <div class="panel-actions">
+
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <h:dataTable styleClass="table bootstrap-datatable countries" value="#{userController.utilisateur.mesProjets}" var="mp">
+                                <h:column>
+                                    <f:facet name="header"> Nombres de collaborateurs</f:facet>
+                                    #{userController.getNbrParticipant(mp.id)}
+                                </h:column>
+
+
+                                <h:column>
+                                    <f:facet name="header"> Nom du Projet</f:facet>
+                                    #{mp.titre}
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header"> Taches éfféctuées </f:facet>
+                                    #{userController.getTaskDone(projectBeanEJB)}
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header"> Taches non éfféctuées </f:facet>
+                                    #{userController.getTaskNotDone(projectBeanEJB)}
+
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header"> Progression </f:facet>
+                                    <div class="progress thin">
+                                        <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="#{userController.getProgressPourcentage(mp.id)}" aria-valuemin="0" aria-valuemax="100" style="width: #{userController.getProgressPourcentage(mp.id)}%">
+
+                                        </div>
+                                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="#{userController.getNotProgressPourcentage(mp.id)}" aria-valuemin="0" aria-valuemax="100" style="width: #{userController.getNotProgressPourcentage(mp.id)}%">
+
+                                        </div>
+                                    </div>
+                                    <span class="sr-only">#{userController.getNotProgressPourcentage(mp.id)}%</span>
+                                </h:column>
+
+                            </h:dataTable>
+
+
+                        </div>
+
+                    </div>
+
+                </div><!--/col-->
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </ui:define>
+
+
+
+
+
+        </ui:composition>
+    </h:body>
+</html>

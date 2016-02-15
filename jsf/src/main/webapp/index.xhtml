@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+>
+<h:head>
+    <title>Connexion[login]</title>
+
+
+</h:head>
+
+<h:body>
+    <ui:composition template="layout/template.xhtml">
+
+        <ui:define name="contentCenter">
+            <div class="inputForm">
+                <h1>Connexion: </h1>
+                <h:form >
+                    <div class="form-group">
+                        <h:inputText class="form-control"  a:placeholder="addesse e-mail" value="#{userController.utilisateur.email}" required="true"/>
+                    </div>
+
+                    <div class="form-group">
+                        <h:inputSecret class="form-control" a:placeholder="Mot de passe"  value="#{userController.utilisateur.password}" required="true"/>
+                    </div>
+
+                    <p:growl id="growl" life="2000" />
+                    <div class="form-group">
+                        <ul>
+                        <li class="btn btn-default btn-lg" id="connect">
+                        <h:commandLink  value="Connexion" action="#{userController.connect(userController.utilisateur.email, userController.utilisateur.password)}"/>
+                        </li>
+                        </ul>
+                    </div>
+                </h:form>
+            </div>
+        </ui:define>
+        <h:outputStylesheet library="css" name="bootstrap.css"/>
+        <h:outputStylesheet library="css" name="style.css"/>
+    </ui:composition>
+
+
+</h:body>
+</html>
+
